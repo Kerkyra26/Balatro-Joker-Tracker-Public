@@ -1,0 +1,167 @@
+If you want to examine the macro before downloading it - there are two modules
+
+Module 2
+
+'--------------------------------------
+'
+' Balatro C++ Gold Stake win tracker
+' Designed by Kerkyra26 in 2026
+'
+' Primary coding by Co-Pilot
+'
+' Tidied and simplified by me - a human being.
+'
+' Balatro created by LocalThunk
+' All graphics (c) LocalThunk or respective parties
+'
+' Module 2 - Subs
+'--------------------------------------
+
+Sub ToggleChecked(doneName As String)
+
+'--------------------------------------
+' 2.1 Toggle "X" visibility
+'--------------------------------------
+    
+    ActiveSheet.Shapes(doneName).Visible = Not ActiveSheet.Shapes(doneName).Visible
+  
+     
+End Sub
+  
+Sub UpdateTable(num As String, isChecked As Boolean)
+
+    Dim tbl As ListObject
+
+'--------------------------------------
+' 2.2 The table has conditional formatting
+' based on value of Col 3
+'--------------------------------------
+       
+'--------------------------------------
+' 2.2.1 Choose the correct table
+'--------------------------------------
+    
+    If num <= 75 Then
+        Set tbl = Worksheets("Jokers").ListObjects("Tbl_Jokers_1")
+    
+    Else
+        Set tbl = Worksheets("Jokers").ListObjects("Tbl_Jokers_2")
+    
+    End If
+
+     
+'--------------------------------------
+' 2.3 Loop through table rows to find
+' matching num in column 1
+'--------------------------------------
+        
+    
+    For Each r In tbl.ListRows
+        
+        If r.Range.Cells(1, 1).Value = num Then
+            
+'--------------------------------------
+' 2.3 Write Y or N into Col 3
+'--------------------------------------
+            
+            
+            If isChecked Then
+                
+                r.Range.Cells(1, 3).Value = "Y"
+            
+            Else
+                
+                r.Range.Cells(1, 3).Value = "N"
+            
+            End If
+            
+            found = True
+            
+            Exit For
+        
+        End If
+    
+    Next r
+    
+End Sub
+
+Sub InvertAll_Click()
+
+    Dim i As Long
+    Dim doneName As String
+    Dim numName As String
+    Dim Boo As Boolean
+    
+'--------------------------------------
+' 2.4 Switch off to speed up
+'--------------------------------------
+
+  
+    Application.ScreenUpdating = False
+    Application.Calculation = xlCalculationManual
+    Application.EnableEvents = False
+
+    Boo = True
+    
+    For i = 1 To 150
+            
+        doneName = "[" & i & "] Done"
+        
+        ActiveSheet.Shapes(doneName).Visible = Not ActiveSheet.Shapes(doneName).Visible
+        
+        numName = i
+        
+            If ActiveSheet.Shapes(doneName).Visible Then
+            
+                Boo = True
+            
+            Else
+        
+                Boo = False
+            
+            End If
+        
+        Call UpdateTable(numName, Boo)
+              
+    Next i
+    
+    Application.ScreenUpdating = True
+    Application.Calculation = xlCalculationAutomatic
+    Application.EnableEvents = True
+    
+End Sub
+Sub ClearAll_Click()
+
+    Dim i As Long
+    Dim doneName As String
+    Dim numName As String
+    Dim Boo As Boolean
+    
+'--------------------------------------
+' 2.5 Switch off to speed up
+'--------------------------------------
+    
+    Application.ScreenUpdating = False
+    Application.Calculation = xlCalculationManual
+    Application.EnableEvents = False
+
+    Boo = False
+   
+ 
+    For i = 1 To 150
+                
+        doneName = "[" & i & "] Done"
+        
+        ActiveSheet.Shapes(doneName).Visible = False
+        
+        numName = i
+        
+        Call UpdateTable(numName, Boo)
+               
+    Next i
+    
+    Application.ScreenUpdating = True
+    Application.Calculation = xlCalculationAutomatic
+    Application.EnableEvents = True
+     
+End Sub
