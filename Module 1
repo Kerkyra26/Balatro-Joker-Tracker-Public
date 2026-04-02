@@ -1,0 +1,78 @@
+If you want to examine the macro before downloading it - there are two modules
+
+Module 1
+
+'--------------------------------------
+'
+' Balatro C++ Gold Stake win tracker
+' Designed by Kerkyra26 in 2026
+'
+' Primary coding by Co-Pilot
+'
+' Tidied and simplified by me - a human being.
+'
+' Balatro created by LocalThunk
+' All graphics (c) LocalThunk or respective parties
+'
+' Module 1 - Main
+'--------------------------------------
+
+
+Sub ToggleDoneImageExtract()
+
+    Dim shpName As String
+    Dim num As String
+    Dim openPos As Long, closePos As Long
+    Dim doneName As String
+    Dim isChecked As Boolean
+    
+'--------------------------------------
+' 1.1 Identify clicked shape
+'--------------------------------------
+    
+    shpName = Application.Caller
+    
+'--------------------------------------
+' 1.2 Find [ and ]
+'--------------------------------------
+    
+    openPos = InStr(shpName, "[")
+    closePos = InStr(shpName, "]")
+    
+    If openPos = 0 Or closePos = 0 Then
+        MsgBox "Shape name missing [n]: " & shpName
+        Exit Sub
+    End If
+    
+'--------------------------------------
+' 1.3 Extract the number (num)
+'--------------------------------------
+    
+    num = Mid(shpName, openPos + 1, closePos - openPos - 1)
+    
+'--------------------------------------
+' 1.4 Build the full shape name for the Done image
+'--------------------------------------
+    
+    doneName = "[" & num & "] Done"
+    
+'--------------------------------------
+' 1.5 Do the work
+'--------------------------------------
+    
+    Call ToggleChecked(doneName)
+    
+'--------------------------------------
+' 1.6 Set isChecked to the current status
+'--------------------------------------
+       
+    isChecked = ActiveSheet.Shapes(doneName).Visible
+       
+'--------------------------------------
+' 1.7 Tell the table
+'--------------------------------------
+    
+    Call UpdateTable(num, isChecked)
+
+      
+End Sub
