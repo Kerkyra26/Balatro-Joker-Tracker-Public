@@ -21,6 +21,8 @@ features.
 Top of the agenda is a date-stamped list of Jokers ticked off, and possibly the addition of pre-gold
 stake markers.
 
+The VB code is reproduced in Module 1 and Module 2 for reference
+
 Note: If you need to be advised it's not a great idea to download and run Macro-enabled worksheets from
 anonymous sources, you probably shouldn't download this.   I have no malicious intent, and the VB code
 is there for inspection, but all risk is on you.
